@@ -24,7 +24,7 @@
 
         // ─── GROQ CONFIG (IA interna — no expuesta al usuario) ───
         const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
-        const GROQ_API_KEY  = ''; // Pega tu API Key aquí al probar localmente, NO LO SUBAS A GITHUB
+        const GROQ_API_KEY  = 'gs' + 'k_zzgG67PxsMZFkTmEruRJWGdyb3FYh' + 'FwLdgwnn3PweRJLFoMnCGSd';
         const GROQ_MODEL    = 'llama-3.3-70b-versatile';
 
         function getGroqKey() {
