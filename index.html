@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNEFA Conecta — Portal Académico & IA</title>
+    <meta name="description"
+        content="Plataforma digital de UNEFA para conectar proyectos de tesis con empresas. Potenciado por IA.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { DEFAULT: '#0A2342', 700: '#0038A8', 900: '#061525' },
+                        gold: { DEFAULT: '#D4AF37', light: 'rgba(212,175,55,0.12)', glow: 'rgba(212,175,55,0.35)' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+        <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/views.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- APP LAYOUT                             -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="app-layout">
+
+        <!-- SIDEBAR OVERLAY (mobile) -->
+        <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+        <!-- ══ SIDEBAR ══ -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Logo -->
+            <div class="sidebar-logo">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div class="sidebar-logo-icon">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <div
+                            style="font-family:'Poppins',sans-serif; font-weight:800; font-size:15px; color:white; line-height:1.1;">
+                            UNEFA <span style="color:var(--gold);">Conecta</span></div>
+                        <div style="font-size:10px; color:rgba(255,255,255,0.4); margin-top:2px;">Portal Académico 2026
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav -->
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Menú Principal</div>
+
+                <button class="nav-item active" id="nav-home" onclick="switchView('home')">
+                    <i class="nav-icon fa-solid fa-house-chimney"></i>
+                    <span>Inicio</span>
+                    <div class="nav-active-bar"></div>
+                </button>
+
+                <button class="nav-item" id="nav-student" onclick="switchView('student')">
+                    <i class="nav-icon fa-solid fa-user-graduate"></i>
+                    <span>Estudiantes</span>
+                    <div class="nav-active-bar"></div>
+                </button>
+
+                <button class="nav-item" id="nav-company" onclick="switchView('company')">
+                    <i class="nav-icon fa-solid fa-briefcase"></i>
+                    <span>Biblioteca</span>
+                    <span class="nav-badge" id="projects-badge">4</span>
+                    <div class="nav-active-bar"></div>
+                </button>
+
+                <div class="nav-section-label" style="margin-top:8px;">Herramientas</div>
+
+                <button class="nav-item" onclick="openChat()">
+                    <i class="nav-icon fa-solid fa-robot"></i>
+                    <span>Tutor IA</span>
+                    <span
+                        style="margin-left:auto; width:7px; height:7px; background:#4ade80; border-radius:50%; animation:pulse 2s infinite;"></span>
+                    <div class="nav-active-bar"></div>
+                </button>
+
+                <div class="nav-section-label" style="margin-top:8px;">Info</div>
+                <button class="nav-item" onclick="switchView('home')">
+                    <i class="nav-icon fa-solid fa-circle-info"></i>
+                    <span>Acerca de UNEFA</span>
+                    <div class="nav-active-bar"></div>
+                </button>
+            </nav>
+
+
+            <!-- Developer Credits -->
+            <div style="padding:14px 16px; border-top:1px solid rgba(255,255,255,0.07); text-align:center;">
+                <div style="font-size:9px; color:rgba(255,255,255,0.3); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:4px;">Desarrollado por</div>
+                <div style="font-size:11px; color:rgba(255,255,255,0.55); font-weight:600; line-height:1.6;">
+                    Eduar Palma &amp; Maikol Sánchez
+                </div>
+            </div>
+        </aside>
+
+        <!-- ══ MAIN CONTENT ══ -->
+        <div class="main-content">
+
+            <!-- TOPBAR -->
+            <div class="topbar">
+                <!-- Mobile menu toggle -->
+                <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+                    <div class="topbar-breadcrumb">
+                        <span>UNEFA Conecta</span>
+                        <i class="fa-solid fa-chevron-right" style="font-size:9px;"></i>
+                        <span id="topbar-section" style="color:#475569; font-weight:500;">Inicio</span>
+                    </div>
+                    <div class="topbar-title" id="topbar-title">Panel Principal</div>
+                </div>
+
+                <div class="topbar-actions">
+                    <!-- Search toggle -->
+                    <div class="topbar-btn" title="Buscar proyectos" onclick="toggleSearch()" id="search-btn">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size:13px;"></i>
+                    </div>
+                    <!-- Notifications -->
+                    <div class="topbar-btn" title="Notificaciones" onclick="toggleNotifications()" id="notif-btn" style="position:relative;">
+                        <i class="fa-solid fa-bell" style="font-size:13px;"></i>
+                        <div class="notif-dot" id="notif-dot" style="display:none;"></div>
+                    </div>
+                    <!-- User Profile / Login -->
+                    <button id="btn-login" class="ai-pill" onclick="openAuthModal()" style="background:var(--navy); color:white; border:none;">
+                        <i class="fa-solid fa-user" style="font-size:11px;"></i> Entrar
+                    </button>
+                    <div id="user-profile" style="display:none; align-items:center; gap:8px; background:#f1f5f9; padding:4px 12px 4px 4px; border-radius:20px; font-size:12px; font-weight:600; color:var(--navy); cursor:pointer;" onclick="toggleUserMenu()">
+                        <div id="user-avatar" style="width:24px; height:24px; background:var(--gold); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px;"></div>
+                        <span id="user-name">Usuario</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size:9px; color:#64748b;"></i>
+                    </div>
+                    <!-- User Menu Dropdown -->
+                    <div id="user-menu" style="display:none; position:absolute; top:54px; right:100px; background:white; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:180px; z-index:9000; overflow:hidden; border:1px solid #e2e8f0;">
+                        <div style="padding:12px; border-bottom:1px solid #f1f5f9; font-size:11px; color:#64748b;">
+                            Rol: <strong id="user-role-display" style="color:var(--navy);">...</strong>
+                        </div>
+                        <button onclick="logout()" style="width:100%; text-align:left; padding:10px 12px; background:none; border:none; color:#ef4444; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:500;">
+                            <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right:8px;"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                    <!-- AI Chat pill -->
+                    <button class="ai-pill" onclick="openChat()">
+                        <div class="ai-dot"></div>
+                        <i class="fa-solid fa-robot" style="font-size:11px;"></i>
+                        Tutor IA
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- PAGE BODY -->
+            <div class="page-body">
+
+                <!-- ══════════════════════════ -->
+                <!-- VIEW: INICIO              -->
+                <!-- ══════════════════════════ -->
+                <div class="view active" id="view-home">
+
+                    <!-- Hero -->
+                    <div class="hero-card">
+                        <div class="hero-img-bg"></div>
+                        <div class="hero-content">
+                            <h1 class="hero-title">
+                                Tu Tesis Conectada con<br>las <span>Grandes Empresas</span>
+                            </h1>
+                            <p class="hero-desc">
+                                Publica tu proyecto de grado, destaca tus habilidades y sé captado por empresas
+                                nacionales e internacionales. Asistido paso a paso por nuestro <strong
+                                    style="color:var(--gold);">Tutor Virtual de I.A.</strong>
+                            </p>
+                            <div class="hero-btns">
+                                <button class="btn-gold" onclick="switchView('student')">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    Publicar mi Proyecto
+                                </button>
+                                <button class="btn-ghost" onclick="switchView('company')">
+                                    <i class="fa-solid fa-users-viewfinder"></i>
+                                    Ver Talentos
+                                </button>
+                                <button class="btn-ghost" onclick="openChat()">
+                                    <i class="fa-solid fa-robot"></i>
+                                    Hablar con la IA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#eff6ff; color:#1d4ed8;">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+                            <div class="stat-value stat-num" id="stat-projects" data-target="0">0</div>
+                            <div class="stat-label">Proyectos publicados</div>
+                            <div class="stat-trend" id="stat-projects-trend"><i class="fa-solid fa-arrow-trend-up"></i> cargando...</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#f0fdf4; color:#15803d;">
+                                <i class="fa-solid fa-building"></i>
+                            </div>
+                            <div class="stat-value stat-num" id="stat-companies" data-target="0">0</div>
+                            <div class="stat-label">Empresas conectadas</div>
+                            <div class="stat-trend" id="stat-companies-trend"><i class="fa-solid fa-arrow-trend-up"></i> cargando...</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:#fffbeb; color:#92400e;">
+                                <i class="fa-solid fa-handshake"></i>
+                            </div>
+                            <div class="stat-value stat-num" id="stat-internships" data-target="0">0</div>
+                            <div class="stat-label">Solicitudes de contacto</div>
+                            <div class="stat-trend" id="stat-internships-trend"><i class="fa-solid fa-arrow-trend-up"></i> cargando...</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background:var(--gold-light); color:#7a6200;">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <div class="stat-value stat-num" id="stat-careers" data-target="0">0</div>
+                            <div class="stat-label">Carreras disponibles</div>
+
+                        </div>
+                    </div>
+
+                    <!-- 2-col: Services + AI Panel -->
+                    <div class="two-col">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-header-icon"><i class="fa-solid fa-layer-group"></i></div>
+                                <div>
+                                    <div class="card-title">Servicios de la Plataforma</div>
+                                    <div class="card-subtitle">Todo lo que UNEFA Conecta ofrece</div>
+                                </div>
+                            </div>
+                            <div class="card-body" style="padding: 12px;">
+                                <div class="service-item">
+                                    <div class="service-icon"><i class="fa-solid fa-robot"></i></div>
+                                    <div>
+                                        <div style="font-weight:700; font-size:13px; color:#1e293b; margin-bottom:3px;">
+                                            Copiloto Inteligente</div>
+                                        <div style="font-size:12px; color:#64748b; line-height:1.5;">Chatbot IA que guía
+                                            a estudiantes a definir objetivos y traduce términos técnicos para
+                                            reclutadores.</div>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon"><i class="fa-solid fa-file-contract"></i></div>
+                                    <div>
+                                        <div style="font-weight:700; font-size:13px; color:#1e293b; margin-bottom:3px;">
+                                            Pasantías y Contratos</div>
+                                        <div style="font-size:12px; color:#64748b; line-height:1.5;">Digitaliza el
+                                            proceso completo sin papel ni burocracia. Tus proyectos listos para
+                                            implementarse.</div>
+                                    </div>
+                                </div>
+                                <div class="service-item">
+                                    <div class="service-icon"><i class="fa-solid fa-users-viewfinder"></i></div>
+                                    <div>
+                                        <div style="font-weight:700; font-size:13px; color:#1e293b; margin-bottom:3px;">
+                                            Vitrina de Talento</div>
+                                        <div style="font-size:12px; color:#64748b; line-height:1.5;">Acceso exclusivo a
+                                            industrias nacionales e internacionales del sector tecnológico y de gestión.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                                        <div
+                                            style="width:40px; height:40px; border-radius:10px; background:var(--gold-light); color:#7a6200; display:flex; align-items:center; justify-content:center; font-size:16px;">
+                                            <i class="fa-solid fa-bolt"></i>
+                                        </div>
+                                        <div
+                                            style="font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; color:var(--navy);">
+                                            ¿Cómo funciona?</div>
+                                    </div>
+                                    <ol style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+                                        <li style="display:flex; align-items:flex-start; gap:10px;">
+                                            <span
+                                                style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">1</span>
+                                            <div><strong style="font-size:12px; color:#1e293b;">Sube tu Tesis:</strong>
+                                                <span style="font-size:12px; color:#64748b;">Describe tu propuesta en el
+                                                    sistema.</span></div>
+                                        </li>
+                                        <li style="display:flex; align-items:flex-start; gap:10px;">
+                                            <span
+                                                style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">2</span>
+                                            <div><strong style="font-size:12px; color:#1e293b;">Optimiza con
+                                                    IA:</strong> <span style="font-size:12px; color:#64748b;">El tutor
+                                                    mejora tu perfil académico.</span></div>
+                                        </li>
+                                        <li style="display:flex; align-items:flex-start; gap:10px;">
+                                            <span
+                                                style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">3</span>
+                                            <div><strong style="font-size:12px; color:#1e293b;">Sé Captado:</strong>
+                                                <span style="font-size:12px; color:#64748b;">Empresas te encuentran y
+                                                    contactan.</span></div>
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                    </div>
+
+                </div><!-- /view-home -->
+
+                <!-- ══════════════════════════ -->
+                <!-- VIEW: ESTUDIANTES         -->
+                <!-- ══════════════════════════ -->
+                <div class="view" id="view-student" style="padding-top:0;">
+                    
+                    <div style="display:grid; grid-template-columns:1fr 360px; gap:20px; align-items:start; margin-top:0;">
+
+                        <!-- FORM CARD -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-header-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                                <div>
+                                    <div class="card-title">Registrar Proyecto o Tesis</div>
+                                    <div class="card-subtitle">Publica tu investigación y hazte visible para las
+                                        empresas</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form id="project-form" onsubmit="handleFormSubmit(event)">
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                        <div class="form-group">
+                                            <label class="form-label">Nombre del Autor</label>
+                                            <input type="text" id="form-author" required class="form-control"
+                                                placeholder="Ej. Ana Pérez">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Especialidad / Carrera</label>
+                                            <select id="form-career" required class="form-control">
+                                                <option value="" disabled selected>Selecciona tu carrera...</option>
+                                                <optgroup label="── Ingeniería ──">
+                                                    <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
+                                                    <option value="Ingeniería en Telecomunicaciones">Ingeniería en Telecomunicaciones</option>
+                                                    <option value="Ingeniería en Telemática">Ingeniería en Telemática</option>
+                                                    <option value="Ingeniería Civil">Ingeniería Civil</option>
+                                                    <option value="Ingeniería Mecánica">Ingeniería Mecánica</option>
+                                                    <option value="Ingeniería Eléctrica">Ingeniería Eléctrica</option>
+                                                    <option value="Ingeniería Electrónica">Ingeniería Electrónica</option>
+                                                    <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                                                    <option value="Ingeniería Aeronáutica">Ingeniería Aeronáutica</option>
+                                                    <option value="Ingeniería Naval">Ingeniería Naval</option>
+                                                    <option value="Ingeniería de Gas">Ingeniería de Gas</option>
+                                                    <option value="Ingeniería Ambiental">Ingeniería Ambiental</option>
+                                                    <option value="Ingeniería Agronómica">Ingeniería Agronómica</option>
+                                                    <option value="Ingeniería en Mantenimiento">Ingeniería en Mantenimiento</option>
+                                                    <option value="Ingeniería de Producción">Ingeniería de Producción</option>
+                                                </optgroup>
+                                                <optgroup label="── Ciencias Administrativas ──">
+                                                    <option value="Administración">Administración</option>
+                                                    <option value="Contaduría Pública">Contaduría Pública</option>
+                                                    <option value="Administración de Desastres">Administración de Desastres y Gestión de Riesgos</option>
+                                                    <option value="Logística y Transporte">Logística y Transporte</option>
+                                                </optgroup>
+                                                <optgroup label="── Ciencias Básicas y Humanidades ──">
+                                                    <option value="Ciencias y Tecnologías de los Alimentos">Ciencias y Tecnologías de los Alimentos</option>
+                                                    <option value="Educación">Educación</option>
+                                                    <option value="Derecho">Derecho</option>
+                                                    <option value="Medicina">Medicina</option>
+                                                    <option value="Enfermería">Enfermería</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                        <div class="form-group">
+                                            <label class="form-label"><i class="fa-solid fa-envelope" style="color:var(--gold); margin-right:5px;"></i>Correo de Contacto</label>
+                                            <input type="email" id="form-email" required class="form-control"
+                                                placeholder="tu@correo.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label"><i class="fa-brands fa-whatsapp" style="color:#25d366; margin-right:5px;"></i>WhatsApp / Teléfono</label>
+                                            <input type="tel" id="form-phone" required class="form-control"
+                                                placeholder="+58 412 000 0000">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Título del Proyecto / Tesis</label>
+                                        <input type="text" id="form-title" required class="form-control"
+                                            placeholder="Ej. Diseño de un Sistema Automatizado de Monitoreo Agrícola">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Resumen de la Investigación</label>
+                                        <textarea id="form-summary" required class="form-control"
+                                            placeholder="Describe el problema, la solución tecnológica aplicada y los resultados esperados..."></textarea>
+                                    </div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                                        <div class="form-group">
+                                            <label class="form-label">Habilidades Técnicas</label>
+                                            <input type="text" id="form-skills" required class="form-control"
+                                                placeholder="Python, IoT, AutoCAD...">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Disponibilidad</label>
+                                            <select id="form-status" required class="form-control">
+                                                <option value="Disponible para Pasantías">Buscando Pasantías</option>
+                                                <option value="Disponible para Contrato">Buscando Contrato</option>
+                                                <option value="Ambos">Ambas opciones</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="submit-btn" class="btn-submit">
+                                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                                        Publicar Proyecto
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN -->
+                        <div style="display:flex; flex-direction:column; gap:16px;">
+
+
+
+                            <!-- My uploads -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-header-icon gold"><i class="fa-solid fa-folder-open"></i></div>
+                                    <div>
+                                        <div class="card-title">Mis Publicaciones</div>
+                                        <div class="card-subtitle"><span id="upload-count">0</span> proyecto(s)
+                                            registrado(s)</div>
+                                    </div>
+                                </div>
+                                <div class="card-body" id="my-uploads"
+                                    style="max-height:240px; overflow-y:auto; padding:12px 16px; scrollbar-width:thin;">
+                                    <div style="text-align:center; padding:24px 0; color:#94a3b8;">
+                                        <i class="fa-solid fa-box-open"
+                                            style="font-size:28px; color:#e2e8f0; display:block; margin-bottom:8px;"></i>
+                                        <span style="font-size:12px; font-style:italic;">Aún no has registrado
+                                            proyectos.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /view-student -->
+
+                <!-- ══════════════════════════ -->
+                <!-- VIEW: EMPRESAS            -->
+                <!-- ══════════════════════════ -->
+                <div class="view" id="view-company">
+
+                    <!-- Page header -->
+                    <div style="margin-bottom:20px;">
+                        <div
+                            style="font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; color:var(--navy);">
+                            Biblioteca de Proyectos UNEFA</div>
+                        <div style="font-size:13px; color:#64748b; margin-top:3px;">Explora los proyectos y tesis publicados por estudiantes</div>
+                    </div>
+
+                    <!-- Filter bar -->
+                    <div class="filter-row">
+                        <div class="search-bar-wrap">
+                            <i class="fa-solid fa-magnifying-glass" style="color:#94a3b8; font-size:13px;"></i>
+                            <input type="text" id="search-input" onkeyup="filterProjects()"
+                                placeholder="Buscar por tecnología, tema, autor, carrera...">
+                        </div>
+                        <select class="filter-select" id="filter-career" onchange="filterProjects()">
+                            <option value="all">Todas las carreras</option>
+                            <option value="Ingeniería de Sistemas">Ing. Sistemas</option>
+                            <option value="Ingeniería de Telecomunicaciones">Ing. Telecomunicaciones</option>
+                            <option value="Ingeniería Civil / Mecánica">Ing. Civil / Mecánica</option>
+                            <option value="Administración de Desastres">Gestión / Desastres</option>
+                        </select>
+                        <select class="filter-select" id="filter-status" onchange="filterProjects()">
+                            <option value="all">Cualquier disponibilidad</option>
+                            <option value="Disponible para Pasantías">Pasantías</option>
+                            <option value="Disponible para Contrato">Contrato</option>
+                            <option value="Ambos">Ambos</option>
+                        </select>
+                        <div style="margin-left:auto; font-size:12px; color:#94a3b8; font-weight:500;"
+                            id="results-count">4 proyectos</div>
+                    </div>
+
+                    <!-- Projects grid -->
+                    <div class="projects-grid" id="projects-grid"></div>
+
+                    <!-- No results -->
+                    <div class="no-results" id="no-results">
+                        <i class="fa-solid fa-users-slash"
+                            style="font-size:40px; color:#e2e8f0; margin-bottom:12px;"></i>
+                        <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; color:#475569;">
+                            Sin resultados</div>
+                        <div style="font-size:13px; color:#94a3b8; margin-top:4px;">Prueba con otros términos o filtros.
+                        </div>
+                    </div>
+
+                </div><!-- /view-company -->
+
+            </div><!-- /page-body -->
+        </div><!-- /main-content -->
+    </div><!-- /app-layout -->
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- CHATBOT DRAWER                          -->
+    <!-- ═══════════════════════════════════════ -->
+    <div id="chat-drawer">
+        <div class="chat-header">
+            <div class="chat-avatar"><i class="fa-solid fa-headset" style="font-size:14px;"></i></div>
+            <div style="flex:1; min-width:0;">
+                <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; color:white;">Tutor IA
+                    UNEFA</div>
+                <div
+                    style="font-size:10px; color:rgba(255,255,255,0.5); display:flex; align-items:center; gap:5px; margin-top:1px;">
+                    <span style="width:5px;height:5px;background:#4ade80;border-radius:50%;"></span>
+                    En línea · Motor RAG 2026
+                </div>
+            </div>
+            <button onclick="clearChat()"
+                style="background:rgba(255,255,255,0.1); border:none; color:rgba(255,255,255,0.6); width:28px; height:28px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; margin-right:4px;"
+                title="Reiniciar">
+                <i class="fa-solid fa-rotate-left" style="font-size:11px;"></i>
+            </button>
+            <button onclick="closeChat()"
+                style="background:rgba(255,255,255,0.1); border:none; color:rgba(255,255,255,0.6); width:28px; height:28px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s;"
+                title="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-msg">
+                <div class="chat-msg-avatar">IA</div>
+                <div class="chat-bubble bot">
+                    <p style="font-weight:700; color:var(--navy); margin-bottom:6px;">¡Hola! Soy el Copiloto IA de UNEFA
+                        Conecta. 👋</p>
+                    <p style="margin-bottom:10px;">Te guío en el registro de proyectos, búsqueda de talento o la mejora
+                        de tu perfil académico. ¿Por dónde empezamos?</p>
+                    <div class="chat-quick-btns">
+                        <button class="chat-quick-btn" onclick="sendMessage('Soy una empresa, ¿qué proyectos tienen disponibles?')">
+                            <i class="fa-solid fa-briefcase" style="color:var(--gold); margin-right:5px;"></i> Soy Empresa: ¿cómo recluto?
+                        </button>
+                        <button class="chat-quick-btn" onclick="sendMessage('Busca proyectos que le beneficien a mi bufete de abogados')">
+                            <i class="fa-solid fa-magnifying-glass" style="color:var(--gold); margin-right:5px;"></i> Buscar proyecto para mi empresa
+                        </button>
+                        <button class="chat-quick-btn" onclick="sendMessage('¿Cómo subo mi tesis al portal?')">
+                            <i class="fa-solid fa-file-invoice" style="color:var(--gold); margin-right:5px;"></i> ¿Cómo subo mi tesis?
+                        </button>
+                        <button class="chat-quick-btn" onclick="sendMessage('Dame consejos para resumir mi tesis')">
+                            <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold); margin-right:5px;"></i> Consejos para mi resumen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form class="chat-footer" onsubmit="handleChatSubmit(event)">
+            <input type="text" id="chatbot-input" class="chat-input" placeholder="Escribe tu pregunta aquí..." required
+                autocomplete="off">
+            <button type="submit" class="chat-send">
+                <i class="fa-solid fa-paper-plane" style="font-size:12px;"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- FAB CHAT BUTTON -->
+    <button id="chat-fab" onclick="openChat()">
+        <i class="fa-solid fa-robot"></i>
+        <div class="fab-badge"></div>
+    </button>
+
+    <!-- SEARCH OVERLAY -->
+    <div id="search-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,35,66,0.55); backdrop-filter:blur(6px); z-index:9000; align-items:flex-start; justify-content:center; padding-top:80px;" onclick="closeSearchOnOverlay(event)">
+        <div style="background:white; border-radius:20px; padding:24px; width:min(620px,92vw); box-shadow:0 24px 64px rgba(0,0,0,0.25);">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                <i class="fa-solid fa-magnifying-glass" style="color:var(--gold); font-size:18px;"></i>
+                <input id="global-search-input" type="text" placeholder="Buscar proyectos, autores, habilidades..." oninput="runGlobalSearch(this.value)"
+                    style="flex:1; border:none; outline:none; font-size:15px; font-family:'Inter',sans-serif; color:var(--navy);">
+                <button onclick="toggleSearch()" style="background:#f1f5f9; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; color:#64748b; font-size:14px;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="global-search-results" style="max-height:380px; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,35,66,0.6); backdrop-filter:blur(4px); z-index:9500; align-items:center; justify-content:center;" onclick="if(event.target===this) closeAuthModal()">
+        <div style="background:white; border-radius:24px; width:min(400px, 92vw); overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
+            <div style="display:flex; border-bottom:1px solid #e2e8f0;">
+                <button id="tab-login" onclick="switchAuthTab('login')" style="flex:1; padding:16px; background:white; border:none; font-family:'Poppins',sans-serif; font-weight:700; font-size:14px; color:var(--navy); border-bottom:3px solid var(--navy); cursor:pointer;">Iniciar Sesión</button>
+                <button id="tab-register" onclick="switchAuthTab('register')" style="flex:1; padding:16px; background:#f8fafc; border:none; font-family:'Poppins',sans-serif; font-weight:600; font-size:14px; color:#94a3b8; border-bottom:3px solid transparent; cursor:pointer;">Registrarse</button>
+            </div>
+            
+            <div style="padding:24px;">
+                <!-- Login Form -->
+                <div id="form-login">
+                    <input type="email" id="login-email" placeholder="Correo electrónico" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <input type="password" id="login-pass" placeholder="Contraseña" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:20px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <button onclick="loginWithEmail()" style="width:100%; padding:12px; background:var(--navy); color:white; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-bottom:16px;">Entrar</button>
+                </div>
+                
+                <!-- Register Form -->
+                <div id="form-register" style="display:none;">
+                    <input type="text" id="reg-name" placeholder="Nombre completo / Empresa" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <select id="reg-role" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none; background:white;">
+                        <option value="estudiante">Soy Estudiante (Publicar proyectos)</option>
+                        <option value="empresa">Soy Empresa (Reclutar talento)</option>
+                    </select>
+                    <input type="email" id="reg-email" placeholder="Correo electrónico" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <input type="password" id="reg-pass" placeholder="Contraseña (mínimo 6 caracteres)" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:20px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <button onclick="registerWithEmail()" style="width:100%; padding:12px; background:var(--navy); color:white; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-bottom:16px;">Crear Cuenta</button>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                    <div style="height:1px; background:#e2e8f0; flex:1;"></div>
+                    <span style="font-size:11px; color:#94a3b8; font-weight:600; text-transform:uppercase;">O continuar con</span>
+                    <div style="height:1px; background:#e2e8f0; flex:1;"></div>
+                </div>
+
+                <button onclick="loginWithGoogle()" style="width:100%; padding:12px; background:white; color:#334155; border:1px solid #e2e8f0; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:18px;"> Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATIONS PANEL -->
+    <div id="notif-panel" style="display:none; position:fixed; top:64px; right:16px; width:340px; background:white; border-radius:16px; box-shadow:0 16px 48px rgba(0,0,0,0.18); z-index:8900; border:1px solid #e2e8f0; overflow:hidden;">
+        <div style="background:var(--navy); color:white; padding:14px 18px; display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:13px;"><i class="fa-solid fa-bell" style="color:var(--gold); margin-right:8px;"></i>Solicitudes Recientes</div>
+            <button onclick="toggleNotifications()" style="background:rgba(255,255,255,0.15); border:none; border-radius:6px; color:white; cursor:pointer; width:26px; height:26px; font-size:12px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="notif-list" style="max-height:360px; overflow-y:auto; padding:12px;">
+            <p style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</p>
+        </div>
+    </div>
+
+    <!-- MODAL CONTACTO -->
+    <div id="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal-box" style="max-width:520px;">
+            <div class="modal-top-bar"></div>
+            <div class="modal-body">
+                <!-- Header -->
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #f1f5f9;">
+                    <div style="width:42px; height:42px; background:linear-gradient(135deg,#22c55e,#16a34a); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:18px; flex-shrink:0; box-shadow:0 4px 12px rgba(34,197,94,0.3);">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <div>
+                        <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; color:var(--navy);">Contactar Estudiante</div>
+                        <div style="font-size:11px; color:#94a3b8; margin-top:2px;">Datos de contacto directo + formulario de propuesta</div>
+                    </div>
+                    <button onclick="closeModal()" style="margin-left:auto; width:32px; height:32px; border-radius:8px; border:none; background:#f1f5f9; color:#64748b; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s;" title="Cerrar">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Student contact info card -->
+                <div id="modal-student-info" style="background:linear-gradient(135deg,#f0f7ff,#e8f4e8); border:1px solid #bfdbfe; border-radius:14px; padding:16px; margin-bottom:18px;">
+                    <div style="font-size:10px; font-weight:700; color:var(--navy); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;"><i class="fa-solid fa-user-graduate" style="color:var(--gold); margin-right:5px;"></i>Datos del Estudiante</div>
+                    <div style="font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px;" id="modal-student-name">—</div>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                        <a id="modal-btn-email" href="#" target="_blank"
+                            style="display:flex; align-items:center; gap:7px; padding:9px 14px; background:var(--navy); color:white; border-radius:10px; text-decoration:none; font-size:12px; font-weight:600; transition:all 0.2s;"
+                            onmouseover="this.style.background='#0038A8'" onmouseout="this.style.background='var(--navy)'">
+                            <i class="fa-solid fa-envelope"></i> Enviar Email
+                        </a>
+                        <a id="modal-btn-whatsapp" href="#" target="_blank"
+                            style="display:flex; align-items:center; gap:7px; padding:9px 14px; background:#25d366; color:white; border-radius:10px; text-decoration:none; font-size:12px; font-weight:600; transition:all 0.2s;"
+                            onmouseover="this.style.background='#128c7e'" onmouseout="this.style.background='#25d366'">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Company form -->
+                <div style="font-size:11px; font-weight:700; color:#64748b; letter-spacing:0.07em; text-transform:uppercase; margin-bottom:12px;">— O envía una propuesta formal —</div>
+                <form id="contact-form" onsubmit="handleContactSubmit(event)">
+                    <input type="hidden" id="modal-project-id">
+                    <input type="hidden" id="modal-student-email-hidden">
+                    <input type="hidden" id="modal-student-phone-hidden">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                        <div class="form-group">
+                            <label class="form-label">Nombre de la Empresa</label>
+                            <input type="text" id="contact-company-name" required class="form-control" placeholder="Ej. CANTV / PDVSA">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Correo Institucional</label>
+                            <input type="email" id="contact-email" required class="form-control" placeholder="rrhh@empresa.gob.ve">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Oferta</label>
+                        <select id="contact-type" required class="form-control">
+                            <option value="Pasantías">Pasantía Profesional</option>
+                            <option value="Contrato de Trabajo">Contrato de Trabajo Directo</option>
+                            <option value="Mentoría">Mentoría / Investigación Conjunta</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mensaje para el Estudiante</label>
+                        <textarea id="contact-message" required class="form-control" placeholder="Hola, nos llamó mucho la atención tu proyecto..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fa-solid fa-paper-plane"></i> Registrar Propuesta
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- TOAST -->
+    <div id="toast">
+        <div id="toast-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <div>
+            <div id="toast-title" style="font-weight:700; font-size:13px; color:#1e293b;"></div>
+            <div id="toast-msg" style="font-size:11.5px; color:#64748b; margin-top:2px;"></div>
+        </div>
+        <button onclick="hideToast()"
+            style="background:none; border:none; color:#94a3b8; cursor:pointer; margin-left:8px; font-size:12px;"><i
+                class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- JAVASCRIPT                              -->
+    <!-- ═══════════════════════════════════════ -->
+        <!-- ARCHIVOS JAVASCRIPT MODULARES -->
+    <script src="js/firebase/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/firebase/auth.js"></script>
+    <script src="js/ui/render.js"></script>
+    <script src="js/firebase/firestore.js"></script>
+    <script src="js/ui/navigation.js"></script>
+    <script src="js/ui/modals.js"></script>
+    <script src="js/features/search.js"></script>
+    <script src="js/features/chatbot.js"></script>
+
+</body>
+
+</html>

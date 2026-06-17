@@ -1,0 +1,31 @@
+*,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --navy: #0A2342;
+            --navy-700: #0038A8;
+            --navy-900: #061525;
+            --gold: #D4AF37;
+            --gold-light: rgba(212, 175, 55, 0.12);
+            --gold-glow: rgba(212, 175, 55, 0.30);
+            --sidebar-w: 260px;
+            --topbar-h: 64px;
+            --bg: #f0f2f7;
+            /* Paleta oficial UNEFA */
+            --amarillo: #FCD116;
+            --azul-bandera: #0038A8;
+            --rojo: #CE1126;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #1e293b;
+        }
