@@ -10,6 +10,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
+        const storage = firebase.storage();
         let currentUser = null;
         let currentUserRole = 'visitante'; // visitante, estudiante, empresa
 

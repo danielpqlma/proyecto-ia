@@ -28,6 +28,55 @@
         }
 
 
+        // ─── PDF SELECTION & UI STATE ───
+        let selectedPDFFile = null;
+
+        function handlePDFSelection(input) {
+            const file = input.files[0];
+            const titleEl = document.getElementById('pdf-status-title');
+            const descEl = document.getElementById('pdf-status-desc');
+            const clearBtn = document.getElementById('btn-clear-pdf');
+            const container = input.parentElement;
+
+            if (!file) return;
+
+            if (file.type !== 'application/pdf') {
+                showToast('Formato incorrecto', 'Por favor selecciona un archivo PDF.');
+                input.value = '';
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('Archivo muy grande', 'El archivo no debe superar los 5MB.');
+                input.value = '';
+                return;
+            }
+
+            selectedPDFFile = file;
+            titleEl.textContent = file.name;
+            descEl.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+            clearBtn.style.display = 'flex';
+            container.style.borderColor = 'var(--gold)';
+            container.style.background = 'var(--gold-light)';
+        }
+
+        function clearPDFSelection(e) {
+            if (e) e.stopPropagation();
+            const input = document.getElementById('form-pdf');
+            const titleEl = document.getElementById('pdf-status-title');
+            const descEl = document.getElementById('pdf-status-desc');
+            const clearBtn = document.getElementById('btn-clear-pdf');
+            const container = input.parentElement;
+
+            selectedPDFFile = null;
+            input.value = '';
+            titleEl.textContent = 'Selecciona tu documento PDF';
+            descEl.textContent = 'Máximo 5MB';
+            clearBtn.style.display = 'none';
+            container.style.borderColor = '#cbd5e1';
+            container.style.background = '#f8fafc';
+        }
+
         // ─── FORM SUBMIT ───
         async function handleFormSubmit(e) {
             e.preventDefault();
@@ -57,6 +106,23 @@
             const status = document.getElementById('form-status').value;
             const date = new Date().toLocaleDateString('es-VE', { month: 'long', year: 'numeric' });
 
+            let pdfUrl = null;
+            let pdfName = null;
+
+            if (selectedPDFFile) {
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Subiendo PDF...';
+                try {
+                    const storageRef = storage.ref();
+                    const fileRef = storageRef.child(`proyectos/${currentUser.uid}/${Date.now()}_${selectedPDFFile.name}`);
+                    const uploadTask = await fileRef.put(selectedPDFFile);
+                    pdfUrl = await uploadTask.ref.getDownloadURL();
+                    pdfName = selectedPDFFile.name;
+                } catch(err) {
+                    console.error("Storage upload failed:", err);
+                    showToast('⚠️ Advertencia', 'No se pudo subir el PDF, pero guardaremos tu propuesta sin el documento.');
+                }
+            }
+
             try {
                 const docRef = await db.collection('proyectos').add({
                     author: author,
@@ -68,13 +134,16 @@
                     skills: skills,
                     status: status,
                     date: date,
+                    pdfUrl: pdfUrl,
+                    pdfName: pdfName,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     uid: currentUser.uid
                 });
-                projects.unshift({ id: docRef.id, author, email, phone, career, title, summary, skills, status, date, uid: currentUser.uid });
+                projects.unshift({ id: docRef.id, author, email, phone, career, title, summary, skills, status, date, pdfUrl, pdfName, uid: currentUser.uid });
                 renderProjects();
                 updateMyUploads();
                 document.getElementById('project-form').reset();
+                clearPDFSelection();
                 showToast('¡Publicado en la nube!', `"${title.substring(0, 45)}..." ya es visible para todas las empresas.`);
             } catch (err) {
                 showToast('❌ Error', 'No se pudo guardar en la base de datos. Verifica tu conexión.');
@@ -105,7 +174,7 @@
             <div class="upload-item-icon"><i class="fa-solid fa-file-lines"></i></div>
             <div style="flex:1; min-width:0;">
                 <div style="font-size:12px; font-weight:700; color:#1e293b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.title}</div>
-                <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${p.career} · <span style="color:var(--navy-700); font-weight:600;">${p.status}</span></div>
+                <div style="font-size:10px; color:#94a3b8; margin-top:2px;">${p.career} · <span style="color:var(--navy-700); font-weight:600;">${p.status}</span>${p.pdfUrl ? ' · <span style="color:#ef4444; font-weight:600;"><i class="fa-solid fa-file-pdf"></i> PDF</span>' : ''}</div>
             </div>
             <button onclick="deleteProject('${p.id}')" style="background:none; border:none; color:#cbd5e1; cursor:pointer; padding:4px 6px; border-radius:6px; transition:all 0.15s;" title="Eliminar"
                 onmouseover="this.style.background='#fef2f2'; this.style.color='#ef4444';"

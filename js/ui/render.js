@@ -40,8 +40,9 @@
                 <div>${chips}</div>
                 <div class="project-card-footer">
                     ${badge}
-                    <div style="display:flex; gap:6px;">
-                        ${(currentUser && proj.uid === currentUser.uid) ? `<button onclick="deleteProject('${proj.id}')" style="background:#fee2e2; color:#ef4444; border:none; border-radius:8px; padding:6px 10px; cursor:pointer;" title="Eliminar proyecto"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        ${proj.pdfUrl ? `<a href="${proj.pdfUrl}" target="_blank" style="background:#f8fafc; color:#475569; border:1px solid #cbd5e1; border-radius:9px; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-size:11.5px; font-weight:700; gap:5px; transition:all 0.2s;" onmouseover="this.style.background='#fee2e2'; this.style.borderColor='#fca5a5'; this.style.color='#b91c1c';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1'; this.style.color='#475569';" title="Ver documento PDF del proyecto"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</a>` : ''}
+                        ${(currentUser && proj.uid === currentUser.uid) ? `<button onclick="deleteProject('${proj.id}')" style="background:#fee2e2; color:#ef4444; border:none; border-radius:8px; padding:8px 10px; cursor:pointer;" title="Eliminar proyecto"><i class="fa-solid fa-trash"></i></button>` : ''}
                         <button class="btn-captar" onclick="openContactModal('${proj.id}', '${proj.author.replace(/'/g, '&apos;')}')">
                             <i class="fa-solid fa-handshake"></i> Captar
                         </button>
