@@ -1,3 +1,22 @@
+        // ─── OPEN PROJECT PDF (with base64 compatibility) ───
+        function openProjectPDF(pdfUrl) {
+            if (!pdfUrl) return;
+            if (pdfUrl.startsWith('data:')) {
+                const win = window.open();
+                if (win) {
+                    win.document.write(`<iframe src="${pdfUrl}" frameborder="0" style="position:fixed; border:0; top:0; left:0; bottom:0; right:0; width:100%; height:100%;" allowfullscreen></iframe>`);
+                    win.document.title = "Documento del Proyecto - UNEFA Conecta";
+                } else {
+                    const link = document.createElement('a');
+                    link.href = pdfUrl;
+                    link.download = 'proyecto.pdf';
+                    link.click();
+                }
+            } else {
+                window.open(pdfUrl, '_blank');
+            }
+        }
+
         // ─── RENDER PROJECTS ───
         function renderProjects(list = null) {
             const data = list ?? projects;
@@ -41,7 +60,7 @@
                 <div class="project-card-footer">
                     ${badge}
                     <div style="display:flex; gap:6px; align-items:center;">
-                        ${proj.pdfUrl ? `<a href="${proj.pdfUrl}" target="_blank" style="background:#f8fafc; color:#475569; border:1px solid #cbd5e1; border-radius:9px; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; font-size:11.5px; font-weight:700; gap:5px; transition:all 0.2s;" onmouseover="this.style.background='#fee2e2'; this.style.borderColor='#fca5a5'; this.style.color='#b91c1c';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1'; this.style.color='#475569';" title="Ver documento PDF del proyecto"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</a>` : ''}
+                        ${proj.pdfUrl ? `<button onclick="openProjectPDF('${proj.pdfUrl.replace(/'/g, "\\'")}')" style="background:#f8fafc; color:#475569; border:1px solid #cbd5e1; border-radius:9px; padding:8px 12px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; font-size:11.5px; font-weight:700; gap:5px; transition:all 0.2s;" onmouseover="this.style.background='#fee2e2'; this.style.borderColor='#fca5a5'; this.style.color='#b91c1c';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1'; this.style.color='#475569';" title="Ver documento PDF del proyecto"><i class="fa-solid fa-file-pdf" style="color:#ef4444;"></i> PDF</button>` : ''}
                         ${(currentUser && proj.uid === currentUser.uid) ? `<button onclick="deleteProject('${proj.id}')" style="background:#fee2e2; color:#ef4444; border:none; border-radius:8px; padding:8px 10px; cursor:pointer;" title="Eliminar proyecto"><i class="fa-solid fa-trash"></i></button>` : ''}
                         <button class="btn-captar" onclick="openContactModal('${proj.id}', '${proj.author.replace(/'/g, '&apos;')}')">
                             <i class="fa-solid fa-handshake"></i> Captar

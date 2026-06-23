@@ -11,6 +11,8 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
         const storage = firebase.storage();
+        storage.setMaxUploadRetryTime(3000); // 3 seconds max retry time
+        storage.setMaxOperationRetryTime(3000); // 3 seconds max operation time
         let currentUser = null;
         let currentUserRole = 'visitante'; // visitante, estudiante, empresa
 

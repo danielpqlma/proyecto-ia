@@ -77,6 +77,15 @@
             container.style.background = '#f8fafc';
         }
 
+        function convertFileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
         // ─── FORM SUBMIT ───
         async function handleFormSubmit(e) {
             e.preventDefault();
@@ -118,8 +127,19 @@
                     pdfUrl = await uploadTask.ref.getDownloadURL();
                     pdfName = selectedPDFFile.name;
                 } catch(err) {
-                    console.error("Storage upload failed:", err);
-                    showToast('⚠️ Advertencia', 'No se pudo subir el PDF, pero guardaremos tu propuesta sin el documento.');
+                    console.error("Storage upload failed, trying base64 fallback:", err);
+                    if (selectedPDFFile.size <= 750 * 1024) {
+                        try {
+                            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando documento...';
+                            pdfUrl = await convertFileToBase64(selectedPDFFile);
+                            pdfName = selectedPDFFile.name;
+                            showToast('ℹ️ Nota', 'El documento se guardó localmente en la base de datos (Storage no disponible).');
+                        } catch(b64Err) {
+                            showToast('⚠️ Advertencia', 'No se pudo guardar el PDF. Se publicará la tesis sin documento.');
+                        }
+                    } else {
+                        showToast('⚠️ Advertencia', 'La subida falló y el PDF supera los 750KB. Se publicará sin documento.');
+                    }
                 }
             }
 
