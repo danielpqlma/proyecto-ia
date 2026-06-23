@@ -2,7 +2,8 @@
         const viewConfig = {
             home: { section: 'Inicio', title: 'Panel Principal' },
             student: { section: 'Estudiantes', title: 'Registrar Proyecto' },
-            company: { section: 'Biblioteca', title: 'Bolsa de Talento' }
+            company: { section: 'Biblioteca', title: 'Bolsa de Talento' },
+            about: { section: 'Acerca de', title: 'Sobre la UNEFA' }
         };
 
         function switchView(id) {

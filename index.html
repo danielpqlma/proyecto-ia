@@ -36,7 +36,7 @@
         }
     </script>
 
-        <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/views.css">
     <link rel="stylesheet" href="css/components.css">
@@ -105,7 +105,7 @@
                 </button>
 
                 <div class="nav-section-label" style="margin-top:8px;">Info</div>
-                <button class="nav-item" onclick="switchView('home')">
+                <button class="nav-item" id="nav-about" onclick="switchView('about')">
                     <i class="nav-icon fa-solid fa-circle-info"></i>
                     <span>Acerca de UNEFA</span>
                     <div class="nav-active-bar"></div>
@@ -115,7 +115,9 @@
 
             <!-- Developer Credits -->
             <div style="padding:14px 16px; border-top:1px solid rgba(255,255,255,0.07); text-align:center;">
-                <div style="font-size:9px; color:rgba(255,255,255,0.3); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:4px;">Desarrollado por</div>
+                <div
+                    style="font-size:9px; color:rgba(255,255,255,0.3); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:4px;">
+                    Desarrollado por</div>
                 <div style="font-size:11px; color:rgba(255,255,255,0.55); font-weight:600; line-height:1.6;">
                     Eduar Palma &amp; Maikol Sánchez
                 </div>
@@ -147,25 +149,34 @@
                         <i class="fa-solid fa-magnifying-glass" style="font-size:13px;"></i>
                     </div>
                     <!-- Notifications -->
-                    <div class="topbar-btn" title="Notificaciones" onclick="toggleNotifications()" id="notif-btn" style="position:relative;">
+                    <div class="topbar-btn" title="Notificaciones" onclick="toggleNotifications()" id="notif-btn"
+                        style="position:relative;">
                         <i class="fa-solid fa-bell" style="font-size:13px;"></i>
                         <div class="notif-dot" id="notif-dot" style="display:none;"></div>
                     </div>
                     <!-- User Profile / Login -->
-                    <button id="btn-login" class="ai-pill" onclick="openAuthModal()" style="background:var(--navy); color:white; border:none; display:flex; align-items:center; gap:6px;">
-                        <i class="fa-solid fa-user" style="font-size:11px;"></i> <span class="hide-on-mobile">Entrar</span>
+                    <button id="btn-login" class="ai-pill" onclick="openAuthModal()"
+                        style="background:var(--navy); color:white; border:none; display:flex; align-items:center; gap:6px;">
+                        <i class="fa-solid fa-user" style="font-size:11px;"></i> <span
+                            class="hide-on-mobile">Entrar</span>
                     </button>
-                    <div id="user-profile" style="display:none; align-items:center; gap:8px; background:#f1f5f9; padding:4px 12px 4px 4px; border-radius:20px; font-size:12px; font-weight:600; color:var(--navy); cursor:pointer;" onclick="toggleUserMenu()">
-                        <div id="user-avatar" style="width:24px; height:24px; background:var(--gold); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px;"></div>
+                    <div id="user-profile"
+                        style="display:none; align-items:center; gap:8px; background:#f1f5f9; padding:4px 12px 4px 4px; border-radius:20px; font-size:12px; font-weight:600; color:var(--navy); cursor:pointer;"
+                        onclick="toggleUserMenu()">
+                        <div id="user-avatar"
+                            style="width:24px; height:24px; background:var(--gold); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px;">
+                        </div>
                         <span id="user-name" class="hide-on-mobile">Usuario</span>
                         <i class="fa-solid fa-chevron-down" style="font-size:9px; color:#64748b;"></i>
                     </div>
                     <!-- User Menu Dropdown -->
-                    <div id="user-menu" style="display:none; position:absolute; top:54px; right:100px; background:white; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:180px; z-index:9000; overflow:hidden; border:1px solid #e2e8f0;">
+                    <div id="user-menu"
+                        style="display:none; position:absolute; top:54px; right:100px; background:white; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.1); width:180px; z-index:9000; overflow:hidden; border:1px solid #e2e8f0;">
                         <div style="padding:12px; border-bottom:1px solid #f1f5f9; font-size:11px; color:#64748b;">
                             Rol: <strong id="user-role-display" style="color:var(--navy);">...</strong>
                         </div>
-                        <button onclick="logout()" style="width:100%; text-align:left; padding:10px 12px; background:none; border:none; color:#ef4444; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:500;">
+                        <button onclick="logout()"
+                            style="width:100%; text-align:left; padding:10px 12px; background:none; border:none; color:#ef4444; font-size:13px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:500;">
                             <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right:8px;"></i> Cerrar Sesión
                         </button>
                     </div>
@@ -224,7 +235,8 @@
                             </div>
                             <div class="stat-value stat-num" id="stat-projects" data-target="0">0</div>
                             <div class="stat-label">Proyectos publicados</div>
-                            <div class="stat-trend" id="stat-projects-trend"><i class="fa-solid fa-arrow-trend-up"></i> cargando...</div>
+                            <div class="stat-trend" id="stat-projects-trend"><i class="fa-solid fa-arrow-trend-up"></i>
+                                cargando...</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon" style="background:#f0fdf4; color:#15803d;">
@@ -232,7 +244,8 @@
                             </div>
                             <div class="stat-value stat-num" id="stat-companies" data-target="0">0</div>
                             <div class="stat-label">Empresas conectadas</div>
-                            <div class="stat-trend" id="stat-companies-trend"><i class="fa-solid fa-arrow-trend-up"></i> cargando...</div>
+                            <div class="stat-trend" id="stat-companies-trend"><i class="fa-solid fa-arrow-trend-up"></i>
+                                cargando...</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon" style="background:#fffbeb; color:#92400e;">
@@ -240,7 +253,8 @@
                             </div>
                             <div class="stat-value stat-num" id="stat-internships" data-target="0">0</div>
                             <div class="stat-label">Solicitudes de contacto</div>
-                            <div class="stat-trend" id="stat-internships-trend"><i class="fa-solid fa-arrow-trend-up"></i> cargando...</div>
+                            <div class="stat-trend" id="stat-internships-trend"><i
+                                    class="fa-solid fa-arrow-trend-up"></i> cargando...</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon" style="background:var(--gold-light); color:#7a6200;">
@@ -297,42 +311,44 @@
                         </div>
 
 
-                            <div class="card">
-                                <div class="card-body">
-                                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-                                        <div
-                                            style="width:40px; height:40px; border-radius:10px; background:var(--gold-light); color:#7a6200; display:flex; align-items:center; justify-content:center; font-size:16px;">
-                                            <i class="fa-solid fa-bolt"></i>
-                                        </div>
-                                        <div
-                                            style="font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; color:var(--navy);">
-                                            ¿Cómo funciona?</div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                                    <div
+                                        style="width:40px; height:40px; border-radius:10px; background:var(--gold-light); color:#7a6200; display:flex; align-items:center; justify-content:center; font-size:16px;">
+                                        <i class="fa-solid fa-bolt"></i>
                                     </div>
-                                    <ol style="list-style:none; display:flex; flex-direction:column; gap:10px;">
-                                        <li style="display:flex; align-items:flex-start; gap:10px;">
-                                            <span
-                                                style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">1</span>
-                                            <div><strong style="font-size:12px; color:#1e293b;">Sube tu Tesis:</strong>
-                                                <span style="font-size:12px; color:#64748b;">Describe tu propuesta en el
-                                                    sistema.</span></div>
-                                        </li>
-                                        <li style="display:flex; align-items:flex-start; gap:10px;">
-                                            <span
-                                                style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">2</span>
-                                            <div><strong style="font-size:12px; color:#1e293b;">Optimiza con
-                                                    IA:</strong> <span style="font-size:12px; color:#64748b;">El tutor
-                                                    mejora tu perfil académico.</span></div>
-                                        </li>
-                                        <li style="display:flex; align-items:flex-start; gap:10px;">
-                                            <span
-                                                style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">3</span>
-                                            <div><strong style="font-size:12px; color:#1e293b;">Sé Captado:</strong>
-                                                <span style="font-size:12px; color:#64748b;">Empresas te encuentran y
-                                                    contactan.</span></div>
-                                        </li>
-                                    </ol>
+                                    <div
+                                        style="font-family:'Poppins',sans-serif; font-weight:700; font-size:13px; color:var(--navy);">
+                                        ¿Cómo funciona?</div>
                                 </div>
+                                <ol style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+                                    <li style="display:flex; align-items:flex-start; gap:10px;">
+                                        <span
+                                            style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">1</span>
+                                        <div><strong style="font-size:12px; color:#1e293b;">Sube tu Tesis:</strong>
+                                            <span style="font-size:12px; color:#64748b;">Describe tu propuesta en el
+                                                sistema.</span>
+                                        </div>
+                                    </li>
+                                    <li style="display:flex; align-items:flex-start; gap:10px;">
+                                        <span
+                                            style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">2</span>
+                                        <div><strong style="font-size:12px; color:#1e293b;">Optimiza con
+                                                IA:</strong> <span style="font-size:12px; color:#64748b;">El tutor
+                                                mejora tu perfil académico.</span></div>
+                                    </li>
+                                    <li style="display:flex; align-items:flex-start; gap:10px;">
+                                        <span
+                                            style="width:22px; height:22px; background:var(--navy); color:var(--gold); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; margin-top:1px;">3</span>
+                                        <div><strong style="font-size:12px; color:#1e293b;">Sé Captado:</strong>
+                                            <span style="font-size:12px; color:#64748b;">Empresas te encuentran y
+                                                contactan.</span>
+                                        </div>
+                                    </li>
+                                </ol>
                             </div>
+                        </div>
                     </div>
 
                 </div><!-- /view-home -->
@@ -341,7 +357,7 @@
                 <!-- VIEW: ESTUDIANTES         -->
                 <!-- ══════════════════════════ -->
                 <div class="view" id="view-student" style="padding-top:0;">
-                    
+
                     <div class="student-view-layout">
 
                         <!-- FORM CARD -->
@@ -367,30 +383,41 @@
                                             <select id="form-career" required class="form-control">
                                                 <option value="" disabled selected>Selecciona tu carrera...</option>
                                                 <optgroup label="── Ingeniería ──">
-                                                    <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
-                                                    <option value="Ingeniería en Telecomunicaciones">Ingeniería en Telecomunicaciones</option>
-                                                    <option value="Ingeniería en Telemática">Ingeniería en Telemática</option>
+                                                    <option value="Ingeniería de Sistemas">Ingeniería de Sistemas
+                                                    </option>
+                                                    <option value="Ingeniería en Telecomunicaciones">Ingeniería en
+                                                        Telecomunicaciones</option>
+                                                    <option value="Ingeniería en Telemática">Ingeniería en Telemática
+                                                    </option>
                                                     <option value="Ingeniería Civil">Ingeniería Civil</option>
                                                     <option value="Ingeniería Mecánica">Ingeniería Mecánica</option>
                                                     <option value="Ingeniería Eléctrica">Ingeniería Eléctrica</option>
-                                                    <option value="Ingeniería Electrónica">Ingeniería Electrónica</option>
+                                                    <option value="Ingeniería Electrónica">Ingeniería Electrónica
+                                                    </option>
                                                     <option value="Ingeniería Industrial">Ingeniería Industrial</option>
-                                                    <option value="Ingeniería Aeronáutica">Ingeniería Aeronáutica</option>
+                                                    <option value="Ingeniería Aeronáutica">Ingeniería Aeronáutica
+                                                    </option>
                                                     <option value="Ingeniería Naval">Ingeniería Naval</option>
                                                     <option value="Ingeniería de Gas">Ingeniería de Gas</option>
                                                     <option value="Ingeniería Ambiental">Ingeniería Ambiental</option>
                                                     <option value="Ingeniería Agronómica">Ingeniería Agronómica</option>
-                                                    <option value="Ingeniería en Mantenimiento">Ingeniería en Mantenimiento</option>
-                                                    <option value="Ingeniería de Producción">Ingeniería de Producción</option>
+                                                    <option value="Ingeniería en Mantenimiento">Ingeniería en
+                                                        Mantenimiento</option>
+                                                    <option value="Ingeniería de Producción">Ingeniería de Producción
+                                                    </option>
+                                                    <option value="algo">algo</option>
                                                 </optgroup>
                                                 <optgroup label="── Ciencias Administrativas ──">
                                                     <option value="Administración">Administración</option>
                                                     <option value="Contaduría Pública">Contaduría Pública</option>
-                                                    <option value="Administración de Desastres">Administración de Desastres y Gestión de Riesgos</option>
-                                                    <option value="Logística y Transporte">Logística y Transporte</option>
+                                                    <option value="Administración de Desastres">Administración de
+                                                        Desastres y Gestión de Riesgos</option>
+                                                    <option value="Logística y Transporte">Logística y Transporte
+                                                    </option>
                                                 </optgroup>
                                                 <optgroup label="── Ciencias Básicas y Humanidades ──">
-                                                    <option value="Ciencias y Tecnologías de los Alimentos">Ciencias y Tecnologías de los Alimentos</option>
+                                                    <option value="Ciencias y Tecnologías de los Alimentos">Ciencias y
+                                                        Tecnologías de los Alimentos</option>
                                                     <option value="Educación">Educación</option>
                                                     <option value="Derecho">Derecho</option>
                                                     <option value="Medicina">Medicina</option>
@@ -401,12 +428,16 @@
                                     </div>
                                     <div class="form-row-2col">
                                         <div class="form-group">
-                                            <label class="form-label"><i class="fa-solid fa-envelope" style="color:var(--gold); margin-right:5px;"></i>Correo de Contacto</label>
+                                            <label class="form-label"><i class="fa-solid fa-envelope"
+                                                    style="color:var(--gold); margin-right:5px;"></i>Correo de
+                                                Contacto</label>
                                             <input type="email" id="form-email" required class="form-control"
                                                 placeholder="tu@correo.com">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label"><i class="fa-brands fa-whatsapp" style="color:#25d366; margin-right:5px;"></i>WhatsApp / Teléfono</label>
+                                            <label class="form-label"><i class="fa-brands fa-whatsapp"
+                                                    style="color:#25d366; margin-right:5px;"></i>WhatsApp /
+                                                Teléfono</label>
                                             <input type="tel" id="form-phone" required class="form-control"
                                                 placeholder="+58 412 000 0000">
                                         </div>
@@ -483,7 +514,8 @@
                         <div
                             style="font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; color:var(--navy);">
                             Biblioteca de Proyectos UNEFA</div>
-                        <div style="font-size:13px; color:#64748b; margin-top:3px;">Explora los proyectos y tesis publicados por estudiantes</div>
+                        <div style="font-size:13px; color:#64748b; margin-top:3px;">Explora los proyectos y tesis
+                            publicados por estudiantes</div>
                     </div>
 
                     <!-- Filter bar -->
@@ -525,6 +557,117 @@
 
                 </div><!-- /view-company -->
 
+                <!-- ══════════════════════════ -->
+                <!-- VIEW: ACERCA DE UNEFA      -->
+                <!-- ══════════════════════════ -->
+                <div class="view" id="view-about" style="padding-top:0;">
+                    
+                    <!-- Hero / Banner Académico -->
+                    <div class="hero-card" style="margin-bottom: 24px;">
+                        <div class="hero-content">
+                            <span class="hero-badge">
+                                <i class="fa-solid fa-university"></i> Institución Primicia
+                            </span>
+                            <h1 class="hero-title" style="font-size: clamp(24px, 3vw, 36px);">
+                                Universidad Nacional Experimental Politécnica de la<br><span>Fuerza Armada Bolivariana</span>
+                            </h1>
+                            <p class="hero-desc" style="margin-bottom: 0; font-style: italic; font-weight: 500; color: var(--gold);">
+                                "Excelencia Educativa Abierta al Pueblo"
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Grid Misión y Visión (Dos Columnas Responsivo) -->
+                    <div class="two-col" style="margin-bottom: 24px;">
+                        <!-- Misión -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-header-icon"><i class="fa-solid fa-bullseye"></i></div>
+                                <div class="card-title">Misión</div>
+                            </div>
+                            <div class="card-body">
+                                <p style="font-size: 13px; color: #475569; line-height: 1.7; text-align: justify;">
+                                    Formar ciudadanos profesionales con un alto sentido de responsabilidad social, patriótica y ética, a través de programas de docencia, investigación y extensión. Buscamos el desarrollo integral de la nación y la vinculación activa de nuestros estudiantes con las necesidades productivas e industriales de la patria.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Visión -->
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-header-icon gold"><i class="fa-solid fa-eye"></i></div>
+                                <div class="card-title" style="color: var(--navy);">Visión</div>
+                            </div>
+                            <div class="card-body">
+                                <p style="font-size: 13px; color: #475569; line-height: 1.7; text-align: justify;">
+                                    Ser la institución de educación universitaria líder en el país, reconocida nacional e internacionalmente por su excelencia académica, el rigor de su investigación científica, la solidez de sus valores éticos y militares, y su compromiso inquebrantable con el desarrollo tecnológico y social de Venezuela.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reseña Histórica -->
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="card-header">
+                            <div class="card-header-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                            <div>
+                                <div class="card-title">Nuestra Historia</div>
+                                <div class="card-subtitle">Evolución institucional al servicio de la nación</div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="padding: 24px;">
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                                    <div style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: var(--gold); background: var(--gold-light); padding: 4px 12px; border-radius: 8px; flex-shrink: 0;">1974</div>
+                                    <div style="font-size: 13px; color: #475569; line-height: 1.6;">
+                                        Nace originalmente bajo el nombre de <strong>Instituto Universitario Politécnico de las Fuerzas Armadas Nacionales (IUPFAN)</strong>, enfocado en formar profesionales técnicos para el sector de defensa y desarrollo nacional.
+                                    </div>
+                                </div>
+                                <div style="height: 1px; background: #e2e8f0; margin-left: 56px;"></div>
+                                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                                    <div style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: var(--navy); background: #eff6ff; padding: 4px 12px; border-radius: 8px; flex-shrink: 0;">1999</div>
+                                    <div style="font-size: 13px; color: #475569; line-height: 1.6;">
+                                        Por decreto del Ejecutivo Nacional y del Presidente Hugo Chávez, el IUPFAN es promovido al rango de Universidad Experimental y renombrado como <strong>UNEFA</strong>, abriendo sus aulas al pueblo venezolano y expandiendo su oferta académica.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Valores Institucionales (Grid de 3 Columnas) -->
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; color: var(--navy); margin-bottom: 12px;">Valores UNEFA</h3>
+                        <div class="three-col">
+                            <!-- Valor 1: Disciplina -->
+                            <div class="card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--gold-light); color: #7a6200; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">Disciplina</h4>
+                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Orden, respeto a las normas y constancia en el deber diario.</p>
+                            </div>
+
+                            <!-- Valor 2: Excelencia -->
+                            <div class="card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: #eff6ff; color: #1d4ed8; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">Excelencia</h4>
+                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Calidad educativa orientada al avance científico e industrial.</p>
+                            </div>
+
+                            <!-- Valor 3: Patriotismo -->
+                            <div class="card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <div style="width: 42px; height: 42px; border-radius: 50%; background: #f0fdf4; color: #15803d; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                                    <i class="fa-solid fa-flag"></i>
+                                </div>
+                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">Patriotismo</h4>
+                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Compromiso moral e histórico con el bienestar de Venezuela.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /view-about -->
+
             </div><!-- /page-body -->
         </div><!-- /main-content -->
     </div><!-- /app-layout -->
@@ -565,17 +708,23 @@
                     <p style="margin-bottom:10px;">Te guío en el registro de proyectos, búsqueda de talento o la mejora
                         de tu perfil académico. ¿Por dónde empezamos?</p>
                     <div class="chat-quick-btns">
-                        <button class="chat-quick-btn" onclick="sendMessage('Soy una empresa, ¿qué proyectos tienen disponibles?')">
-                            <i class="fa-solid fa-briefcase" style="color:var(--gold); margin-right:5px;"></i> Soy Empresa: ¿cómo recluto?
+                        <button class="chat-quick-btn"
+                            onclick="sendMessage('Soy una empresa, ¿qué proyectos tienen disponibles?')">
+                            <i class="fa-solid fa-briefcase" style="color:var(--gold); margin-right:5px;"></i> Soy
+                            Empresa: ¿cómo recluto?
                         </button>
-                        <button class="chat-quick-btn" onclick="sendMessage('Busca proyectos que le beneficien a mi bufete de abogados')">
-                            <i class="fa-solid fa-magnifying-glass" style="color:var(--gold); margin-right:5px;"></i> Buscar proyecto para mi empresa
+                        <button class="chat-quick-btn"
+                            onclick="sendMessage('Busca proyectos que le beneficien a mi bufete de abogados')">
+                            <i class="fa-solid fa-magnifying-glass" style="color:var(--gold); margin-right:5px;"></i>
+                            Buscar proyecto para mi empresa
                         </button>
                         <button class="chat-quick-btn" onclick="sendMessage('¿Cómo subo mi tesis al portal?')">
-                            <i class="fa-solid fa-file-invoice" style="color:var(--gold); margin-right:5px;"></i> ¿Cómo subo mi tesis?
+                            <i class="fa-solid fa-file-invoice" style="color:var(--gold); margin-right:5px;"></i> ¿Cómo
+                            subo mi tesis?
                         </button>
                         <button class="chat-quick-btn" onclick="sendMessage('Dame consejos para resumir mi tesis')">
-                            <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold); margin-right:5px;"></i> Consejos para mi resumen
+                            <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold); margin-right:5px;"></i>
+                            Consejos para mi resumen
                         </button>
                     </div>
                 </div>
@@ -598,67 +747,97 @@
     </button>
 
     <!-- SEARCH OVERLAY -->
-    <div id="search-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,35,66,0.55); backdrop-filter:blur(6px); z-index:9000; align-items:flex-start; justify-content:center; padding-top:80px;" onclick="closeSearchOnOverlay(event)">
-        <div style="background:white; border-radius:20px; padding:24px; width:min(620px,92vw); box-shadow:0 24px 64px rgba(0,0,0,0.25);">
+    <div id="search-overlay"
+        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,35,66,0.55); backdrop-filter:blur(6px); z-index:9000; align-items:flex-start; justify-content:center; padding-top:80px;"
+        onclick="closeSearchOnOverlay(event)">
+        <div
+            style="background:white; border-radius:20px; padding:24px; width:min(620px,92vw); box-shadow:0 24px 64px rgba(0,0,0,0.25);">
             <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                 <i class="fa-solid fa-magnifying-glass" style="color:var(--gold); font-size:18px;"></i>
-                <input id="global-search-input" type="text" placeholder="Buscar proyectos, autores, habilidades..." oninput="runGlobalSearch(this.value)"
+                <input id="global-search-input" type="text" placeholder="Buscar proyectos, autores, habilidades..."
+                    oninput="runGlobalSearch(this.value)"
                     style="flex:1; border:none; outline:none; font-size:15px; font-family:'Inter',sans-serif; color:var(--navy);">
-                <button onclick="toggleSearch()" style="background:#f1f5f9; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; color:#64748b; font-size:14px;"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleSearch()"
+                    style="background:#f1f5f9; border:none; border-radius:8px; width:32px; height:32px; cursor:pointer; color:#64748b; font-size:14px;"><i
+                        class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="global-search-results" style="max-height:380px; overflow-y:auto;"></div>
         </div>
     </div>
 
     <!-- AUTH MODAL -->
-    <div id="auth-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,35,66,0.6); backdrop-filter:blur(4px); z-index:9500; align-items:center; justify-content:center;" onclick="if(event.target===this) closeAuthModal()">
-        <div style="background:white; border-radius:24px; width:min(400px, 92vw); overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
+    <div id="auth-overlay"
+        style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(10,35,66,0.6); backdrop-filter:blur(4px); z-index:9500; align-items:center; justify-content:center;"
+        onclick="if(event.target===this) closeAuthModal()">
+        <div
+            style="background:white; border-radius:24px; width:min(400px, 92vw); overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,0.2);">
             <div style="display:flex; border-bottom:1px solid #e2e8f0;">
-                <button id="tab-login" onclick="switchAuthTab('login')" style="flex:1; padding:16px; background:white; border:none; font-family:'Poppins',sans-serif; font-weight:700; font-size:14px; color:var(--navy); border-bottom:3px solid var(--navy); cursor:pointer;">Iniciar Sesión</button>
-                <button id="tab-register" onclick="switchAuthTab('register')" style="flex:1; padding:16px; background:#f8fafc; border:none; font-family:'Poppins',sans-serif; font-weight:600; font-size:14px; color:#94a3b8; border-bottom:3px solid transparent; cursor:pointer;">Registrarse</button>
+                <button id="tab-login" onclick="switchAuthTab('login')"
+                    style="flex:1; padding:16px; background:white; border:none; font-family:'Poppins',sans-serif; font-weight:700; font-size:14px; color:var(--navy); border-bottom:3px solid var(--navy); cursor:pointer;">Iniciar
+                    Sesión</button>
+                <button id="tab-register" onclick="switchAuthTab('register')"
+                    style="flex:1; padding:16px; background:#f8fafc; border:none; font-family:'Poppins',sans-serif; font-weight:600; font-size:14px; color:#94a3b8; border-bottom:3px solid transparent; cursor:pointer;">Registrarse</button>
             </div>
-            
+
             <div style="padding:24px;">
                 <!-- Login Form -->
                 <div id="form-login">
-                    <input type="email" id="login-email" placeholder="Correo electrónico" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
-                    <input type="password" id="login-pass" placeholder="Contraseña" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:20px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
-                    <button onclick="loginWithEmail()" style="width:100%; padding:12px; background:var(--navy); color:white; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-bottom:16px;">Entrar</button>
+                    <input type="email" id="login-email" placeholder="Correo electrónico"
+                        style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <input type="password" id="login-pass" placeholder="Contraseña"
+                        style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:20px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <button onclick="loginWithEmail()"
+                        style="width:100%; padding:12px; background:var(--navy); color:white; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-bottom:16px;">Entrar</button>
                 </div>
-                
+
                 <!-- Register Form -->
                 <div id="form-register" style="display:none;">
-                    <input type="text" id="reg-name" placeholder="Nombre completo / Empresa" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
-                    <select id="reg-role" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none; background:white;">
+                    <input type="text" id="reg-name" placeholder="Nombre completo / Empresa"
+                        style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <select id="reg-role"
+                        style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none; background:white;">
                         <option value="estudiante">Soy Estudiante (Publicar proyectos)</option>
                         <option value="empresa">Soy Empresa (Reclutar talento)</option>
                     </select>
-                    <input type="email" id="reg-email" placeholder="Correo electrónico" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
-                    <input type="password" id="reg-pass" placeholder="Contraseña (mínimo 6 caracteres)" style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:20px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
-                    <button onclick="registerWithEmail()" style="width:100%; padding:12px; background:var(--navy); color:white; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-bottom:16px;">Crear Cuenta</button>
+                    <input type="email" id="reg-email" placeholder="Correo electrónico"
+                        style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:12px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <input type="password" id="reg-pass" placeholder="Contraseña (mínimo 6 caracteres)"
+                        style="width:100%; padding:12px 14px; border:1px solid #e2e8f0; border-radius:10px; margin-bottom:20px; font-family:'Inter',sans-serif; font-size:14px; outline:none;">
+                    <button onclick="registerWithEmail()"
+                        style="width:100%; padding:12px; background:var(--navy); color:white; border:none; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; margin-bottom:16px;">Crear
+                        Cuenta</button>
                 </div>
 
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
                     <div style="height:1px; background:#e2e8f0; flex:1;"></div>
-                    <span style="font-size:11px; color:#94a3b8; font-weight:600; text-transform:uppercase;">O continuar con</span>
+                    <span style="font-size:11px; color:#94a3b8; font-weight:600; text-transform:uppercase;">O continuar
+                        con</span>
                     <div style="height:1px; background:#e2e8f0; flex:1;"></div>
                 </div>
 
-                <button onclick="loginWithGoogle()" style="width:100%; padding:12px; background:white; color:#334155; border:1px solid #e2e8f0; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:18px;"> Google
+                <button onclick="loginWithGoogle()"
+                    style="width:100%; padding:12px; background:white; color:#334155; border:1px solid #e2e8f0; border-radius:10px; font-weight:600; font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width:18px;">
+                    Google
                 </button>
             </div>
         </div>
     </div>
 
     <!-- NOTIFICATIONS PANEL -->
-    <div id="notif-panel" style="display:none; position:fixed; top:64px; right:16px; width:calc(100vw - 32px); max-width:340px; background:white; border-radius:16px; box-shadow:0 16px 48px rgba(0,0,0,0.18); z-index:8900; border:1px solid #e2e8f0; overflow:hidden;">
-        <div style="background:var(--navy); color:white; padding:14px 18px; display:flex; align-items:center; justify-content:space-between;">
-            <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:13px;"><i class="fa-solid fa-bell" style="color:var(--gold); margin-right:8px;"></i>Solicitudes Recientes</div>
-            <button onclick="toggleNotifications()" style="background:rgba(255,255,255,0.15); border:none; border-radius:6px; color:white; cursor:pointer; width:26px; height:26px; font-size:12px;"><i class="fa-solid fa-xmark"></i></button>
+    <div id="notif-panel"
+        style="display:none; position:fixed; top:64px; right:16px; width:calc(100vw - 32px); max-width:340px; background:white; border-radius:16px; box-shadow:0 16px 48px rgba(0,0,0,0.18); z-index:8900; border:1px solid #e2e8f0; overflow:hidden;">
+        <div
+            style="background:var(--navy); color:white; padding:14px 18px; display:flex; align-items:center; justify-content:space-between;">
+            <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:13px;"><i class="fa-solid fa-bell"
+                    style="color:var(--gold); margin-right:8px;"></i>Solicitudes Recientes</div>
+            <button onclick="toggleNotifications()"
+                style="background:rgba(255,255,255,0.15); border:none; border-radius:6px; color:white; cursor:pointer; width:26px; height:26px; font-size:12px;"><i
+                    class="fa-solid fa-xmark"></i></button>
         </div>
         <div id="notif-list" style="max-height:360px; overflow-y:auto; padding:12px;">
-            <p style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</p>
+            <p style="text-align:center; color:#94a3b8; font-size:12px; padding:20px;"><i
+                    class="fa-solid fa-spinner fa-spin"></i> Cargando...</p>
         </div>
     </div>
 
@@ -668,27 +847,40 @@
             <div class="modal-top-bar"></div>
             <div class="modal-body">
                 <!-- Header -->
-                <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #f1f5f9;">
-                    <div style="width:42px; height:42px; background:linear-gradient(135deg,#22c55e,#16a34a); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:18px; flex-shrink:0; box-shadow:0 4px 12px rgba(34,197,94,0.3);">
+                <div
+                    style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid #f1f5f9;">
+                    <div
+                        style="width:42px; height:42px; background:linear-gradient(135deg,#22c55e,#16a34a); border-radius:12px; display:flex; align-items:center; justify-content:center; color:white; font-size:18px; flex-shrink:0; box-shadow:0 4px 12px rgba(34,197,94,0.3);">
                         <i class="fa-solid fa-handshake"></i>
                     </div>
                     <div>
-                        <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; color:var(--navy);">Contactar Estudiante</div>
-                        <div style="font-size:11px; color:#94a3b8; margin-top:2px;">Datos de contacto directo + formulario de propuesta</div>
+                        <div
+                            style="font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; color:var(--navy);">
+                            Contactar Estudiante</div>
+                        <div style="font-size:11px; color:#94a3b8; margin-top:2px;">Datos de contacto directo +
+                            formulario de propuesta</div>
                     </div>
-                    <button onclick="closeModal()" style="margin-left:auto; width:32px; height:32px; border-radius:8px; border:none; background:#f1f5f9; color:#64748b; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s;" title="Cerrar">
+                    <button onclick="closeModal()"
+                        style="margin-left:auto; width:32px; height:32px; border-radius:8px; border:none; background:#f1f5f9; color:#64748b; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s;"
+                        title="Cerrar">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
 
                 <!-- Student contact info card -->
-                <div id="modal-student-info" style="background:linear-gradient(135deg,#f0f7ff,#e8f4e8); border:1px solid #bfdbfe; border-radius:14px; padding:16px; margin-bottom:18px;">
-                    <div style="font-size:10px; font-weight:700; color:var(--navy); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;"><i class="fa-solid fa-user-graduate" style="color:var(--gold); margin-right:5px;"></i>Datos del Estudiante</div>
-                    <div style="font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px;" id="modal-student-name">—</div>
+                <div id="modal-student-info"
+                    style="background:linear-gradient(135deg,#f0f7ff,#e8f4e8); border:1px solid #bfdbfe; border-radius:14px; padding:16px; margin-bottom:18px;">
+                    <div
+                        style="font-size:10px; font-weight:700; color:var(--navy); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;">
+                        <i class="fa-solid fa-user-graduate" style="color:var(--gold); margin-right:5px;"></i>Datos del
+                        Estudiante</div>
+                    <div style="font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px;"
+                        id="modal-student-name">—</div>
                     <div style="display:flex; gap:8px; flex-wrap:wrap;">
                         <a id="modal-btn-email" href="#" target="_blank"
                             style="display:flex; align-items:center; gap:7px; padding:9px 14px; background:var(--navy); color:white; border-radius:10px; text-decoration:none; font-size:12px; font-weight:600; transition:all 0.2s;"
-                            onmouseover="this.style.background='#0038A8'" onmouseout="this.style.background='var(--navy)'">
+                            onmouseover="this.style.background='#0038A8'"
+                            onmouseout="this.style.background='var(--navy)'">
                             <i class="fa-solid fa-envelope"></i> Enviar Email
                         </a>
                         <a id="modal-btn-whatsapp" href="#" target="_blank"
@@ -700,7 +892,9 @@
                 </div>
 
                 <!-- Company form -->
-                <div style="font-size:11px; font-weight:700; color:#64748b; letter-spacing:0.07em; text-transform:uppercase; margin-bottom:12px;">— O envía una propuesta formal —</div>
+                <div
+                    style="font-size:11px; font-weight:700; color:#64748b; letter-spacing:0.07em; text-transform:uppercase; margin-bottom:12px;">
+                    — O envía una propuesta formal —</div>
                 <form id="contact-form" onsubmit="handleContactSubmit(event)">
                     <input type="hidden" id="modal-project-id">
                     <input type="hidden" id="modal-student-email-hidden">
@@ -708,11 +902,13 @@
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                         <div class="form-group">
                             <label class="form-label">Nombre de la Empresa</label>
-                            <input type="text" id="contact-company-name" required class="form-control" placeholder="Ej. CANTV / PDVSA">
+                            <input type="text" id="contact-company-name" required class="form-control"
+                                placeholder="Ej. CANTV / PDVSA">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Correo Institucional</label>
-                            <input type="email" id="contact-email" required class="form-control" placeholder="rrhh@empresa.gob.ve">
+                            <input type="email" id="contact-email" required class="form-control"
+                                placeholder="rrhh@empresa.gob.ve">
                         </div>
                     </div>
                     <div class="form-group">
@@ -725,7 +921,8 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Mensaje para el Estudiante</label>
-                        <textarea id="contact-message" required class="form-control" placeholder="Hola, nos llamó mucho la atención tu proyecto..."></textarea>
+                        <textarea id="contact-message" required class="form-control"
+                            placeholder="Hola, nos llamó mucho la atención tu proyecto..."></textarea>
                     </div>
                     <button type="submit" class="btn-submit">
                         <i class="fa-solid fa-paper-plane"></i> Registrar Propuesta
@@ -752,7 +949,7 @@
     <!-- ═══════════════════════════════════════ -->
     <!-- JAVASCRIPT                              -->
     <!-- ═══════════════════════════════════════ -->
-        <!-- ARCHIVOS JAVASCRIPT MODULARES -->
+    <!-- ARCHIVOS JAVASCRIPT MODULARES -->
     <script src="js/firebase/config.js"></script>
     <script src="js/app.js"></script>
     <script src="js/firebase/auth.js"></script>
