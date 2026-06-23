@@ -282,3 +282,60 @@
             background: #cbd5e1;
             border-radius: 4px;
         }
+
+        /* ─── RESPONSIVE LAYOUT EXTRA ─── */
+        .student-view-layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
+            align-items: start;
+            margin-top: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .student-view-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                padding: 0 16px;
+                gap: 12px;
+            }
+            .topbar-breadcrumb {
+                display: none;
+            }
+            .topbar-title {
+                font-size: 15px;
+            }
+            .topbar-actions {
+                gap: 8px;
+            }
+            .topbar-btn {
+                width: 34px;
+                height: 34px;
+                border-radius: 8px;
+            }
+            .ai-pill {
+                padding: 6px 12px;
+            }
+            .page-body {
+                padding: 16px 16px 80px 16px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hide-on-mobile {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .topbar {
+                gap: 8px;
+            }
+            .topbar-title {
+                font-size: 13.5px;
+            }
+        }

@@ -850,3 +850,69 @@
                 display: flex;
             }
         }
+
+        /* ─── FORM ROW RESPONSIVE ─── */
+        .form-row-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 640px) {
+            .form-row-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ─── EXTRA FILTER RESPONSIVENESS ─── */
+        @media (max-width: 640px) {
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .filter-row .search-bar-wrap {
+                width: 100%;
+                min-width: auto;
+            }
+            .filter-select {
+                width: 100%;
+            }
+            #results-count {
+                margin-left: 0 !important;
+                text-align: right;
+            }
+        }
+
+        /* ─── RESPONSIVE CARD HEAD/FOOT ─── */
+        .project-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .project-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding-top: 10px;
+            border-top: 1px solid #f1f5f9;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 400px) {
+            .project-card-footer {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .project-card-footer .status-badge {
+                justify-content: center;
+            }
+            .project-card-footer > div {
+                justify-content: flex-end;
+            }
+        }

@@ -26,7 +26,7 @@
         <div class="project-card" style="animation:fadeSlideUp 0.4s ease-out ${i * 0.06}s both;">
             <div class="project-card-top"></div>
             <div class="project-card-body">
-                <div style="display:flex; align-items:start; justify-content:space-between; gap:8px;">
+                <div class="project-card-header">
                     <span style="font-size:11px; font-weight:700; color:rgba(10,35,66,0.6); display:flex; align-items:center; gap:5px;">
                         <i class="fa-solid fa-graduation-cap" style="color:var(--gold);"></i> ${proj.career}
                     </span>
@@ -38,7 +38,7 @@
                 </div>
                 <p style="font-size:11.5px; color:#64748b; line-height:1.6; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">${proj.summary}</p>
                 <div>${chips}</div>
-                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; padding-top:10px; border-top:1px solid #f1f5f9; margin-top:auto;">
+                <div class="project-card-footer">
                     ${badge}
                     <div style="display:flex; gap:6px;">
                         ${(currentUser && proj.uid === currentUser.uid) ? `<button onclick="deleteProject('${proj.id}')" style="background:#fee2e2; color:#ef4444; border:none; border-radius:8px; padding:6px 10px; cursor:pointer;" title="Eliminar proyecto"><i class="fa-solid fa-trash"></i></button>` : ''}
