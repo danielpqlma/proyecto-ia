@@ -2,7 +2,7 @@
         .view {
             display: none;
             animation: fadeSlideUp 0.35s ease-out;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .view.active {
