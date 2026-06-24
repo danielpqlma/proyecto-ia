@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNEFA Conecta — Portal Académico & IA</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect x='2' y='2' width='60' height='60' rx='16' fill='url(%23goldGrad)'/%3E%3Cpath d='M32 14L54 23L32 32L10 23Z' fill='%230A2342'/%3E%3Cpath d='M20 28.5V39C20 44 26 47 32 47C38 47 44 44 44 39V28.5L32 33.5Z' fill='%230A2342'/%3E%3Cpath d='M46 25.5V36.5C46 39 45 40 45 42' stroke='%230A2342' stroke-width='2.5' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='45' cy='43.5' r='2.5' fill='%230A2342'/%3E%3Cdefs%3E%3ClinearGradient id='goldGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23D4AF37'/%3E%3Cstop offset='100%25' stop-color='%23c9a227'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Crect x='2' y='2' width='60' height='60' rx='16' fill='url(%23goldGrad)'/%3E%3Cpath d='M32 14L54 23L32 32L10 23Z' fill='%230A2342'/%3E%3Cpath d='M20 28.5V39C20 44 26 47 32 47C38 47 44 44 44 39V28.5L32 33.5Z' fill='%230A2342'/%3E%3Cpath d='M46 25.5V36.5C46 39 45 40 45 42' stroke='%230A2342' stroke-width='2.5' stroke-linecap='round' fill='none'/%3E%3Ccircle cx='45' cy='43.5' r='2.5' fill='%230A2342'/%3E%3Cdefs%3E%3ClinearGradient id='goldGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23D4AF37'/%3E%3Cstop offset='100%25' stop-color='%23c9a227'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E">
     <meta name="description"
         content="Plataforma digital de UNEFA para conectar proyectos de tesis con empresas. Potenciado por IA.">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -407,7 +408,7 @@
                                                         Mantenimiento</option>
                                                     <option value="Ingeniería de Producción">Ingeniería de Producción
                                                     </option>
-                                                    <option value="algo">algo</option>
+
                                                 </optgroup>
                                                 <optgroup label="── Ciencias Administrativas ──">
                                                     <option value="Administración">Administración</option>
@@ -470,17 +471,29 @@
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin-bottom: 20px;">
-                                        <label class="form-label"><i class="fa-solid fa-file-pdf" style="color:#ef4444; margin-right:5px;"></i>Documento del Proyecto (PDF)</label>
-                                        <div class="pdf-upload-container" style="display:flex; align-items:center; gap:12px; background:#f8fafc; border:1.5px dashed #cbd5e1; border-radius:12px; padding:14px; position:relative; overflow:hidden; transition: all 0.2s ease;">
-                                            <input type="file" id="form-pdf" accept=".pdf" style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;" onchange="handlePDFSelection(this)">
-                                            <div style="width:40px; height:40px; border-radius:10px; background:#fee2e2; color:#ef4444; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
+                                        <label class="form-label"><i class="fa-solid fa-file-pdf"
+                                                style="color:#ef4444; margin-right:5px;"></i>Documento del Proyecto
+                                            (PDF)</label>
+                                        <div class="pdf-upload-container"
+                                            style="display:flex; align-items:center; gap:12px; background:#f8fafc; border:1.5px dashed #cbd5e1; border-radius:12px; padding:14px; position:relative; overflow:hidden; transition: all 0.2s ease;">
+                                            <input type="file" id="form-pdf" accept=".pdf"
+                                                style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;"
+                                                onchange="handlePDFSelection(this)">
+                                            <div
+                                                style="width:40px; height:40px; border-radius:10px; background:#fee2e2; color:#ef4444; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;">
                                                 <i class="fa-solid fa-file-pdf"></i>
                                             </div>
                                             <div style="flex:1; min-width:0;">
-                                                <div id="pdf-status-title" style="font-size:12px; font-weight:700; color:#475569;">Selecciona tu documento PDF</div>
-                                                <div id="pdf-status-desc" style="font-size:10.5px; color:#94a3b8; margin-top:2px;">Máximo 5MB</div>
+                                                <div id="pdf-status-title"
+                                                    style="font-size:12px; font-weight:700; color:#475569;">Selecciona
+                                                    tu documento PDF</div>
+                                                <div id="pdf-status-desc"
+                                                    style="font-size:10.5px; color:#94a3b8; margin-top:2px;">Máximo 5MB
+                                                </div>
                                             </div>
-                                            <button type="button" id="btn-clear-pdf" onclick="clearPDFSelection(event)" style="display:none; background:#f1f5f9; border:none; border-radius:8px; width:28px; height:28px; color:#64748b; cursor:pointer; align-items:center; justify-content:center; transition:all 0.15s;" title="Eliminar archivo">
+                                            <button type="button" id="btn-clear-pdf" onclick="clearPDFSelection(event)"
+                                                style="display:none; background:#f1f5f9; border:none; border-radius:8px; width:28px; height:28px; color:#64748b; cursor:pointer; align-items:center; justify-content:center; transition:all 0.15s;"
+                                                title="Eliminar archivo">
                                                 <i class="fa-solid fa-xmark"></i>
                                             </button>
                                         </div>
@@ -579,7 +592,7 @@
                 <!-- VIEW: ACERCA DE UNEFA      -->
                 <!-- ══════════════════════════ -->
                 <div class="view" id="view-about" style="padding-top:0;">
-                    
+
                     <!-- Hero / Banner Académico -->
                     <div class="hero-card" style="margin-bottom: 24px;">
                         <div class="hero-content">
@@ -587,9 +600,11 @@
                                 <i class="fa-solid fa-university"></i> Institución Primicia
                             </span>
                             <h1 class="hero-title" style="font-size: clamp(24px, 3vw, 36px);">
-                                Universidad Nacional Experimental Politécnica de la<br><span>Fuerza Armada Bolivariana</span>
+                                Universidad Nacional Experimental Politécnica de la<br><span>Fuerza Armada
+                                    Bolivariana</span>
                             </h1>
-                            <p class="hero-desc" style="margin-bottom: 0; font-style: italic; font-weight: 500; color: var(--gold);">
+                            <p class="hero-desc"
+                                style="margin-bottom: 0; font-style: italic; font-weight: 500; color: var(--gold);">
                                 "Excelencia Educativa Abierta al Pueblo"
                             </p>
                         </div>
@@ -605,7 +620,10 @@
                             </div>
                             <div class="card-body">
                                 <p style="font-size: 13px; color: #475569; line-height: 1.7; text-align: justify;">
-                                    Formar ciudadanos profesionales con un alto sentido de responsabilidad social, patriótica y ética, a través de programas de docencia, investigación y extensión. Buscamos el desarrollo integral de la nación y la vinculación activa de nuestros estudiantes con las necesidades productivas e industriales de la patria.
+                                    Formar ciudadanos profesionales con un alto sentido de responsabilidad social,
+                                    patriótica y ética, a través de programas de docencia, investigación y extensión.
+                                    Buscamos el desarrollo integral de la nación y la vinculación activa de nuestros
+                                    estudiantes con las necesidades productivas e industriales de la patria.
                                 </p>
                             </div>
                         </div>
@@ -618,7 +636,10 @@
                             </div>
                             <div class="card-body">
                                 <p style="font-size: 13px; color: #475569; line-height: 1.7; text-align: justify;">
-                                    Ser la institución de educación universitaria líder en el país, reconocida nacional e internacionalmente por su excelencia académica, el rigor de su investigación científica, la solidez de sus valores éticos y militares, y su compromiso inquebrantable con el desarrollo tecnológico y social de Venezuela.
+                                    Ser la institución de educación universitaria líder en el país, reconocida nacional
+                                    e internacionalmente por su excelencia académica, el rigor de su investigación
+                                    científica, la solidez de sus valores éticos y militares, y su compromiso
+                                    inquebrantable con el desarrollo tecnológico y social de Venezuela.
                                 </p>
                             </div>
                         </div>
@@ -636,16 +657,25 @@
                         <div class="card-body" style="padding: 24px;">
                             <div style="display: flex; flex-direction: column; gap: 16px;">
                                 <div style="display: flex; gap: 16px; align-items: flex-start;">
-                                    <div style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: var(--gold); background: var(--gold-light); padding: 4px 12px; border-radius: 8px; flex-shrink: 0;">1974</div>
+                                    <div
+                                        style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: var(--gold); background: var(--gold-light); padding: 4px 12px; border-radius: 8px; flex-shrink: 0;">
+                                        1974</div>
                                     <div style="font-size: 13px; color: #475569; line-height: 1.6;">
-                                        Nace originalmente bajo el nombre de <strong>Instituto Universitario Politécnico de las Fuerzas Armadas Nacionales (IUPFAN)</strong>, enfocado en formar profesionales técnicos para el sector de defensa y desarrollo nacional.
+                                        Nace originalmente bajo el nombre de <strong>Instituto Universitario Politécnico
+                                            de las Fuerzas Armadas Nacionales (IUPFAN)</strong>, enfocado en formar
+                                        profesionales técnicos para el sector de defensa y desarrollo nacional.
                                     </div>
                                 </div>
                                 <div style="height: 1px; background: #e2e8f0; margin-left: 56px;"></div>
                                 <div style="display: flex; gap: 16px; align-items: flex-start;">
-                                    <div style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: var(--navy); background: #eff6ff; padding: 4px 12px; border-radius: 8px; flex-shrink: 0;">1999</div>
+                                    <div
+                                        style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 18px; color: var(--navy); background: #eff6ff; padding: 4px 12px; border-radius: 8px; flex-shrink: 0;">
+                                        1999</div>
                                     <div style="font-size: 13px; color: #475569; line-height: 1.6;">
-                                        Por decreto del Ejecutivo Nacional y del Presidente Hugo Chávez, el IUPFAN es promovido al rango de Universidad Experimental y renombrado como <strong>UNEFA</strong>, abriendo sus aulas al pueblo venezolano y expandiendo su oferta académica.
+                                        Por decreto del Ejecutivo Nacional y del Presidente Hugo Chávez, el IUPFAN es
+                                        promovido al rango de Universidad Experimental y renombrado como
+                                        <strong>UNEFA</strong>, abriendo sus aulas al pueblo venezolano y expandiendo su
+                                        oferta académica.
                                     </div>
                                 </div>
                             </div>
@@ -654,33 +684,50 @@
 
                     <!-- Valores Institucionales (Grid de 3 Columnas) -->
                     <div style="margin-bottom: 20px;">
-                        <h3 style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; color: var(--navy); margin-bottom: 12px;">Valores UNEFA</h3>
+                        <h3
+                            style="font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 16px; color: var(--navy); margin-bottom: 12px;">
+                            Valores UNEFA</h3>
                         <div class="three-col">
                             <!-- Valor 1: Disciplina -->
-                            <div class="card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--gold-light); color: #7a6200; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                            <div class="card"
+                                style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <div
+                                    style="width: 42px; height: 42px; border-radius: 50%; background: var(--gold-light); color: #7a6200; display: flex; align-items: center; justify-content: center; font-size: 16px;">
                                     <i class="fa-solid fa-shield-halved"></i>
                                 </div>
-                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">Disciplina</h4>
-                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Orden, respeto a las normas y constancia en el deber diario.</p>
+                                <h4
+                                    style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">
+                                    Disciplina</h4>
+                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Orden, respeto a las
+                                    normas y constancia en el deber diario.</p>
                             </div>
 
                             <!-- Valor 2: Excelencia -->
-                            <div class="card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: #eff6ff; color: #1d4ed8; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                            <div class="card"
+                                style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <div
+                                    style="width: 42px; height: 42px; border-radius: 50%; background: #eff6ff; color: #1d4ed8; display: flex; align-items: center; justify-content: center; font-size: 16px;">
                                     <i class="fa-solid fa-award"></i>
                                 </div>
-                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">Excelencia</h4>
-                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Calidad educativa orientada al avance científico e industrial.</p>
+                                <h4
+                                    style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">
+                                    Excelencia</h4>
+                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Calidad educativa
+                                    orientada al avance científico e industrial.</p>
                             </div>
 
                             <!-- Valor 3: Patriotismo -->
-                            <div class="card" style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                                <div style="width: 42px; height: 42px; border-radius: 50%; background: #f0fdf4; color: #15803d; display: flex; align-items: center; justify-content: center; font-size: 16px;">
+                            <div class="card"
+                                style="padding: 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                                <div
+                                    style="width: 42px; height: 42px; border-radius: 50%; background: #f0fdf4; color: #15803d; display: flex; align-items: center; justify-content: center; font-size: 16px;">
                                     <i class="fa-solid fa-flag"></i>
                                 </div>
-                                <h4 style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">Patriotismo</h4>
-                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Compromiso moral e histórico con el bienestar de Venezuela.</p>
+                                <h4
+                                    style="font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy);">
+                                    Patriotismo</h4>
+                                <p style="font-size: 11.5px; color: #64748b; line-height: 1.5;">Compromiso moral e
+                                    histórico con el bienestar de Venezuela.</p>
                             </div>
                         </div>
                     </div>
@@ -891,7 +938,8 @@
                     <div
                         style="font-size:10px; font-weight:700; color:var(--navy); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px;">
                         <i class="fa-solid fa-user-graduate" style="color:var(--gold); margin-right:5px;"></i>Datos del
-                        Estudiante</div>
+                        Estudiante
+                    </div>
                     <div style="font-size:13px; font-weight:700; color:var(--navy); margin-bottom:10px;"
                         id="modal-student-name">—</div>
                     <div style="display:flex; gap:8px; flex-wrap:wrap;">
