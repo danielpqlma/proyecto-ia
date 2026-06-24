@@ -6,7 +6,9 @@
             about: { section: 'Acerca de', title: 'Sobre la UNEFA' }
         };
 
-        function switchView(id) {
+        function switchView(id, push = true) {
+            if (!viewConfig[id]) id = 'home';
+
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById('view-' + id).classList.add('active');
 
@@ -23,7 +25,29 @@
             if (body) body.scrollTop = 0;
 
             closeSidebar();
+
+            if (push) {
+                history.pushState({ view: id }, '', '#' + id);
+            }
         }
+
+        // Evento para responder a los botones de atrás/adelante del navegador
+        window.addEventListener('popstate', (event) => {
+            const viewId = (event.state && event.state.view) || 'home';
+            switchView(viewId, false);
+        });
+
+        // Registrar el estado inicial al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialHash = window.location.hash.replace('#', '');
+            const initialView = viewConfig[initialHash] ? initialHash : 'home';
+            
+            history.replaceState({ view: initialView }, '', '#' + initialView);
+            
+            if (initialView !== 'home') {
+                switchView(initialView, false);
+            }
+        });
 
         // ─── SIDEBAR (mobile) ───
         function toggleSidebar() {
